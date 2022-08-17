@@ -1,0 +1,6 @@
+.container {
+    width: 100%;
+    height: calc( 100vh - 114px);
+    padding: 70px 15.5% 98px 15.5% ;
+    background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+}
