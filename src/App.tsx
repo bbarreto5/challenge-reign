@@ -52,6 +52,7 @@ function App() {
 
   useEffect(() => {
     setPage(0);
+    setData([]);
     getData(type, 0).then(data => {
       setTotalPage(data.nbPages);
       setData(dataFilter(data))
@@ -78,6 +79,7 @@ function App() {
   }
 
   const handlePagination = (_: any, newPage: number) => {
+    setData([]);
     setPage(newPage - 1);
     getData(type, newPage - 1).then(data => setData(dataFilter(data)));
   }
