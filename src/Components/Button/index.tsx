@@ -14,7 +14,7 @@ const Button = (props:IButton) => {
         handle,
     }=props;
     return (
-        <button className={"Button "+ active ? " Button_active " :""} onClick={handle}>
+        <button className={"Button "+ (active ? " Button_active " :"")} onClick={handle}>
             { name }
         </button>
     )
