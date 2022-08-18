@@ -12,6 +12,7 @@
 .container_card_info{
     width: 482px;
     height: 90px;
+    cursor: pointer;
 }
 
 .container_card_icon {

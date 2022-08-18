@@ -10,6 +10,7 @@ interface ICard {
     date: string;
     description: string;
     handle: (a: boolean) => void;
+    url: string;
 }
 
 const Card = (props: ICard) => {
@@ -17,20 +18,22 @@ const Card = (props: ICard) => {
         favorite,
         date,
         description,
-        handle
+        handle,
+        url
     } = props
 
     const [myFavorite, setMyFavorite] = useState<boolean>(favorite || false);
 
-    const handleMyFavorite = ()=>{
+    const handleMyFavorite = () => {
         setMyFavorite(!myFavorite)
         handle(!myFavorite);
     }
 
+    const openUrl = () => window.open(url, '_blank')?.focus();
 
     return (
         <div className="container_card">
-            <div className="container_card_info">
+            <div className="container_card_info" onClick={openUrl}>
                 <div>
                     <AccessTime /> <span> {date} </span>
                 </div>
@@ -43,9 +46,9 @@ const Card = (props: ICard) => {
 
                 </div>
                 {
-                    myFavorite 
-                    ? <img src={imgFavorite2} onClick={handleMyFavorite} alt=""/> 
-                    : <img src={imgFavorite1} onClick={handleMyFavorite} alt=""/> 
+                    myFavorite
+                        ? <img src={imgFavorite2} onClick={handleMyFavorite} alt="" />
+                        : <img src={imgFavorite1} onClick={handleMyFavorite} alt="" />
                 }
             </div>
         </div>

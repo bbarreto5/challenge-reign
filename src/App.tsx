@@ -169,6 +169,7 @@ function App() {
                   description={d.story_title}
                   handle={(state) => handleDataFaves(state, d)}
                   favorite
+                  url={d.story_url}
                 />
               )
             }
@@ -180,6 +181,7 @@ function App() {
                   description={d.story_title}
                   handle={(state) => handleDataFaves(state, d)}
                   favorite={isFavotite(d)}
+                  url={d.story_url}
                 />
               )
             }
