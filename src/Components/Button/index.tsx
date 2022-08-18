@@ -4,15 +4,17 @@ import "./index.css"
 interface IButton{
     name:string,
     active:boolean;
+    handle:()=>void;
 }
 
 const Button = (props:IButton) => {
     const{
         name,
-        active
+        active,
+        handle,
     }=props;
     return (
-        <button className={"Button "+ active ? "Button_active" :""}>
+        <button className={"Button "+ active ? " Button_active " :""} onClick={handle}>
             { name }
         </button>
     )
