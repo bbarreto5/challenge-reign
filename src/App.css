@@ -4,3 +4,11 @@
     display: flex;
     justify-content: center;
 }
+.list_article{
+    display: flex;
+    flex-wrap: wrap;
+}
+.container_pagination{
+    display: flex;
+    justify-content: center;
+}
