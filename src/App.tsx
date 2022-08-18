@@ -72,7 +72,7 @@ function App() {
     if (page !== -1) {
       getData(type, page).then(data => setData(dataFilter(data)));
     }
-  }, [page])
+  }, [page, type])
 
   const handlePagination = (_: any, newPage: number) => {
     setPage(--newPage);
