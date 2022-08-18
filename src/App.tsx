@@ -46,7 +46,7 @@ function App() {
   const [totalPages, setTotalPage] = useState<number>(0);
   const [type, setType] = useState<any>(1);
   const [data, setData] = useState<Array<IData>>([]);
-  const [faves, setFaves] = useState<Boolean>(false);
+  const [faves, setFaves] = useState<boolean>(false);
 
   const dataFilter = (data: any): Array<IData> => {
     var auxData: Array<IData> = [];
@@ -86,8 +86,8 @@ function App() {
       <Bar />
       <Container>
         <div className="container_buttons">
-          <Button name="ALL" />
-          <Button name="My faves" />
+          <Button name="ALL" active={!faves}/>
+          <Button name="My faves" active={faves}/>
         </div>
         <div className=''>
 
