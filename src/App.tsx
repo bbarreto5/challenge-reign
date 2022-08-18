@@ -124,10 +124,24 @@ function App() {
 
           <div className='list_article'>
             {
-              faves && dataFaves.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
+              faves && dataFaves.map((d: IData, index: number) =>
+                <Card
+                  key={index}
+                  date={d.created_at}
+                  description={d.story_title}
+                  handle={() => null}
+                />
+              )
             }
             {
-              !faves && data.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
+              !faves && data.map((d: IData, index: number) =>
+                <Card
+                  key={index}
+                  date={d.created_at}
+                  description={d.story_title}
+                  handle={() => null}
+                />
+              )
             }
           </div>
 

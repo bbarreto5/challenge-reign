@@ -1,9 +1,9 @@
 
 import "./index.css"
-import { Favorite, AccessTime, FavoriteBorder } from '@mui/icons-material';
+import { AccessTime } from '@mui/icons-material';
 import { useState } from "react";
-import imgFavorite1 from './conmonstr-favorite-2.png';
-import imgFavorite2 from './iconmonstr-favorite-3.png';
+import imgFavorite1 from '../../Source/Img/iconmonstr-favorite-2.png';
+import imgFavorite2 from '../../Source/Img/iconmonstr-favorite-3.png';
 
 interface ICard {
     favorite?: boolean;
@@ -39,8 +39,13 @@ const Card = (props: ICard) => {
                 </div>
             </div>
             <div className="container_card_icon">
+                <div className="background">
+
+                </div>
                 {
-                    myFavorite ? <Favorite onClick={handleMyFavorite} color="secondary" /> : < FavoriteBorder onClick={handleMyFavorite} htmlColor="white" />
+                    myFavorite 
+                    ? <img src={imgFavorite2} onClick={handleMyFavorite} alt=""/> 
+                    : <img src={imgFavorite1} onClick={handleMyFavorite} alt=""/> 
                 }
             </div>
         </div>

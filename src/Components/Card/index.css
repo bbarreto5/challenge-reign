@@ -17,15 +17,23 @@
 .container_card_icon {
     width: 68px;
     height: 90px;
-    margin: 0 0 0 16px;
-    padding: 35px 22px 33px;
+}
+
+.container_card_icon img{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: -55px;
+    left: 25px;
+}
+
+.container_card_icon .background{
+    width: 68px;
+    height: 90px;
     opacity: 0.06;
     border-radius: 6px;
     border: solid 1px #606060;
     background-color: #606060;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .container_card_info div {
