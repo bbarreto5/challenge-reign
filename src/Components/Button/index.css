@@ -15,7 +15,7 @@
     color: #d6d6d6;
 }
 
-.Button:hover{
+.Button_active{
     border: solid 1px #1797ff;
     color: #1797ff;
 }
