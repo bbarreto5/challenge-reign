@@ -56,7 +56,6 @@ function App() {
       story_url: d.story_url,
       created_at: d.created_at,
     }))
-    console.log({ auxData });
     return auxData;
   }
 
@@ -68,14 +67,9 @@ function App() {
     });
   }, [type])
 
-  useEffect(() => {
-    if (page !== -1) {
-      getData(type, page).then(data => setData(dataFilter(data)));
-    }
-  }, [page, type])
-
   const handlePagination = (_: any, newPage: number) => {
-    setPage(--newPage);
+    setPage(newPage - 1);
+    getData(type, newPage - 1).then(data => setData(dataFilter(data)));
   }
 
   const handleChange = (event: any) => {
@@ -108,7 +102,7 @@ function App() {
                       key={t.name}
                       value={t.value}
                     >
-                      <div style={{ display:"flex" }}>
+                      <div style={{ display: "flex" }}>
                         {<img src={t.img} alt="" style={{ width: 20, height: 20, marginRight: 10 }} />}
                         {t.name}
                       </div>
@@ -129,7 +123,7 @@ function App() {
         </div>
         <div className='container_pagination'>
           <Stack spacing={2}>
-            <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePagination} />
+            <Pagination page={page + 1} count={totalPages} variant="outlined" shape="rounded" onChange={handlePagination} />
           </Stack>
         </div>
       </Container>
