@@ -45,12 +45,13 @@ function App() {
 
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPage] = useState<number>(0);
-  const [type, setType] = useState<any>(1);
+  const [type, setType] = useState<any>(localStorage.getItem("type") || 1);
   const [data, setData] = useState<Array<IData>>([]);
   const [faves, setFaves] = useState<boolean>(false);
   const [dataFaves, setDataFaves] = useState<Array<IData>>([]);
 
   useEffect(() => {
+    localStorage.setItem("type",type);
     setPage(0);
     setData([]);
     getData(type, 0).then(data => {
@@ -95,6 +96,7 @@ function App() {
   const handleSwithData = () => setFaves(!faves);
 
   const handleDataFaves = (state: boolean, newData: IData) => {
+    setDataFaves([]);
     let aux:Array<IData> = []
     if (state) {
       dataFaves.push(newData);
@@ -109,7 +111,11 @@ function App() {
         )
       )
     }
-    setDataFaves(aux);
+    faves 
+    ? setTimeout(()=>{
+      setDataFaves(aux);
+    },1)
+    : setDataFaves(aux);
     localStorage.setItem("faves", JSON.stringify(aux))
   }
 
@@ -166,11 +172,11 @@ function App() {
             {
               faves && dataFaves.map((d: IData, index: number) =>
                 <Card
-                  key={index}
+                  key={d.story_title}
                   date={ `${moment(d.created_at).fromNow()} by ${d.author}`}
                   description={d.story_title}
                   handle={(state) => handleDataFaves(state, d)}
-                  favorite
+                  favorite={true}
                   url={d.story_url}
                 />
               )

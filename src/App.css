@@ -3,6 +3,7 @@
     height: auto;
     display: flex;
     justify-content: center;
+    margin-bottom: 50px;
 }
 .list_article{
     display: flex;
@@ -12,4 +13,6 @@
 .container_pagination{
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 150px;
 }
