@@ -51,7 +51,7 @@ function App() {
   const [dataFaves, setDataFaves] = useState<Array<IData>>([]);
 
   useEffect(() => {
-    localStorage.setItem("type",type);
+    localStorage.setItem("type", type);
     setPage(0);
     setData([]);
     getData(type, 0).then(data => {
@@ -97,10 +97,10 @@ function App() {
 
   const handleDataFaves = (state: boolean, newData: IData) => {
     setDataFaves([]);
-    let aux:Array<IData> = []
+    let aux: Array<IData> = []
     if (state) {
       dataFaves.push(newData);
-      aux = dataFaves.map(d=>d);
+      aux = dataFaves.map(d => d);
     } else {
       aux = dataFaves.filter(
         d => (
@@ -111,15 +111,15 @@ function App() {
         )
       )
     }
-    faves 
-    ? setTimeout(()=>{
-      setDataFaves(aux);
-    },1)
-    : setDataFaves(aux);
+    faves
+      ? setTimeout(() => {
+        setDataFaves(aux);
+      }, 1)
+      : setDataFaves(aux);
     localStorage.setItem("faves", JSON.stringify(aux))
   }
 
-  const isFavotite = (data:IData) => {
+  const isFavotite = (data: IData) => {
     return dataFaves.find(
       d => (
         d.author === data.author &&
@@ -173,7 +173,7 @@ function App() {
               faves && dataFaves.map((d: IData, index: number) =>
                 <Card
                   key={d.story_title}
-                  date={ `${moment(d.created_at).fromNow()} by ${d.author}`}
+                  date={`${moment(d.created_at).fromNow()} by ${d.author}`}
                   description={d.story_title}
                   handle={(state) => handleDataFaves(state, d)}
                   favorite={true}
@@ -198,7 +198,18 @@ function App() {
         </div>
         <div className='container_pagination'>
           <Stack spacing={2}>
-            <Pagination page={page + 1} count={totalPages} variant="outlined" shape="rounded" onChange={handlePagination} />
+            <Pagination
+              page={page + 1}
+              count={totalPages}
+              variant="outlined"
+              shape="rounded"
+              onChange={handlePagination}
+              sx={{
+                '.Mui-selected':{
+                  backgroundColor: "#1797ff !important"
+                }
+              }}
+            />
           </Stack>
         </div>
       </Container>

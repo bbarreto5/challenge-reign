@@ -37,7 +37,7 @@ const Card = (props: ICard) => {
                 <div>
                     <AccessTime /> <span> {date} </span>
                 </div>
-                <div>
+                <div className="description">
                     {description}
                 </div>
             </div>
