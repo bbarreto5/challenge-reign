@@ -7,6 +7,12 @@ import Card from './Components/Card';
 import { getData } from "./Services";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import imgAngular from './Source/Img/image-138@2x.png'
+import imgReact from './Source/Img/image-140@3x.png'
+import imgVue from './Source/Img/image-141@3x.png'
 
 interface IData {
   author: string,
@@ -15,12 +21,30 @@ interface IData {
   created_at: string,
 }
 
+const types = [
+  {
+    name: 'angular',
+    value: 1,
+    img: imgAngular
+  },
+  {
+    name: 'react',
+    value: 2,
+    img: imgReact
+  },
+  {
+    name: 'vue',
+    value: 3,
+    img: imgVue
+  }
+]
+
 
 function App() {
 
   const [page, setPage] = useState<number>(-1);
   const [totalPages, setTotalPage] = useState<number>(0);
-  const [type, setType] = useState<1 | 2 | 3>(1);
+  const [type, setType] = useState<any>(1);
   const [data, setData] = useState<Array<IData>>([]);
 
   const dataFilter = (data: any): Array<IData> => {
@@ -42,7 +66,7 @@ function App() {
       setTotalPage(data.nbPages);
       setData(dataFilter(data))
     });
-  }, [])
+  }, [type])
 
   useEffect(() => {
     if (page != -1) {
@@ -54,6 +78,14 @@ function App() {
     setPage(--newPage);
   }
 
+  const handleChange = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+
+    setType(parseInt(value));
+  };
+
   return (
     <div className="App">
       <Bar />
@@ -64,9 +96,33 @@ function App() {
         </div>
         <div className=''>
 
+          <div>
+            <FormControl sx={{ width: 300 }}>
+              <Select
+                value={type}
+                onChange={handleChange}
+              >
+                {
+                  types.map((t) => (
+                    <MenuItem
+                      key={t.name}
+                      value={t.value}
+                    >
+                      <div style={{ display:"flex" }}>
+                        {<img src={t.img} alt="" style={{ width: 20, height: 20, marginRight: 10 }} />}
+                        {t.name}
+                      </div>
+
+                    </MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+          </div>
+
           <div className='list_article'>
             {
-              data.map( (d:IData) => <Card date={d.created_at} description={d.story_title}/>)
+              data.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
             }
           </div>
 
