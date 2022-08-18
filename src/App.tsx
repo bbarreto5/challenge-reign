@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css'
+import './App.css';
 import Bar from "./Components/Bar";
 import Button from "./Components/Button";
 import Container from "./Components/Container";
@@ -10,9 +10,10 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import imgAngular from './Source/Img/image-138@2x.png'
-import imgReact from './Source/Img/image-140@3x.png'
-import imgVue from './Source/Img/image-141@3x.png'
+import imgAngular from './Source/Img/image-138@2x.png';
+import imgReact from './Source/Img/image-140@3x.png';
+import imgVue from './Source/Img/image-141@3x.png';
+import moment from 'moment';
 
 interface IData {
   author: string,
@@ -49,6 +50,21 @@ function App() {
   const [faves, setFaves] = useState<boolean>(false);
   const [dataFaves, setDataFaves] = useState<Array<IData>>([]);
 
+  useEffect(() => {
+    setPage(0);
+    getData(type, 0).then(data => {
+      setTotalPage(data.nbPages);
+      setData(dataFilter(data))
+    });
+  }, [type])
+
+  useEffect(() => {
+    const favesLocal = localStorage.getItem("faves");
+    if (favesLocal && favesLocal !== undefined && favesLocal !== "undefined") {
+      setDataFaves(JSON.parse(favesLocal))
+    };
+  }, [])
+
   const dataFilter = (data: any): Array<IData> => {
     var auxData: Array<IData> = [];
     const filter = data.hits.filter((d: any) => (d.author && d.story_title && d.story_url && d.created_at))
@@ -60,14 +76,6 @@ function App() {
     }))
     return auxData;
   }
-
-  useEffect(() => {
-    setPage(0);
-    getData(type, 0).then(data => {
-      setTotalPage(data.nbPages);
-      setData(dataFilter(data))
-    });
-  }, [type])
 
   const handlePagination = (_: any, newPage: number) => {
     setPage(newPage - 1);
@@ -83,6 +91,36 @@ function App() {
   };
 
   const handleSwithData = () => setFaves(!faves);
+
+  const handleDataFaves = (state: boolean, newData: IData) => {
+    let aux:Array<IData> = []
+    if (state) {
+      dataFaves.push(newData);
+      aux = dataFaves.map(d=>d);
+    } else {
+      aux = dataFaves.filter(
+        d => (
+          d.author !== newData.author &&
+          d.story_title !== newData.story_title &&
+          d.story_url !== newData.story_url &&
+          d.created_at !== newData.created_at
+        )
+      )
+    }
+    setDataFaves(aux);
+    localStorage.setItem("faves", JSON.stringify(aux))
+  }
+
+  const isFavotite = (data:IData) => {
+    return dataFaves.find(
+      d => (
+        d.author === data.author &&
+        d.story_title === data.story_title &&
+        d.story_url === data.story_url &&
+        d.created_at === data.created_at
+      )
+    ) ? true : false;
+  }
 
   return (
     <div className="App">
@@ -127,9 +165,10 @@ function App() {
               faves && dataFaves.map((d: IData, index: number) =>
                 <Card
                   key={index}
-                  date={d.created_at}
+                  date={ `${moment(d.created_at).fromNow()} by ${d.author}`}
                   description={d.story_title}
-                  handle={() => null}
+                  handle={(state) => handleDataFaves(state, d)}
+                  favorite
                 />
               )
             }
@@ -137,9 +176,10 @@ function App() {
               !faves && data.map((d: IData, index: number) =>
                 <Card
                   key={index}
-                  date={d.created_at}
+                  date={`${moment(d.created_at).fromNow()} by ${d.author}`}
                   description={d.story_title}
-                  handle={() => null}
+                  handle={(state) => handleDataFaves(state, d)}
+                  favorite={isFavotite(d)}
                 />
               )
             }
