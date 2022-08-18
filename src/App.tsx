@@ -47,6 +47,7 @@ function App() {
   const [type, setType] = useState<any>(1);
   const [data, setData] = useState<Array<IData>>([]);
   const [faves, setFaves] = useState<boolean>(false);
+  const [dataFaves, setDataFaves] = useState<Array<IData>>([]);
 
   const dataFilter = (data: any): Array<IData> => {
     var auxData: Array<IData> = [];
@@ -81,43 +82,52 @@ function App() {
     setType(parseInt(value));
   };
 
+  const handleSwithData = () => setFaves(!faves);
+
   return (
     <div className="App">
       <Bar />
       <Container>
         <div className="container_buttons">
-          <Button name="ALL" active={!faves}/>
-          <Button name="My faves" active={faves}/>
+          <Button name="ALL" active={!faves} handle={handleSwithData} />
+          <Button name="My faves" active={faves} handle={handleSwithData} />
         </div>
         <div className=''>
 
-          <div>
-            <FormControl sx={{ width: 300 }}>
-              <Select
-                value={type}
-                onChange={handleChange}
-              >
-                {
-                  types.map((t) => (
-                    <MenuItem
-                      key={t.name}
-                      value={t.value}
-                    >
-                      <div style={{ display: "flex" }}>
-                        {<img src={t.img} alt="" style={{ width: 20, height: 20, marginRight: 10 }} />}
-                        {t.name}
-                      </div>
+          {
+            !faves && (
+              <div>
+                <FormControl sx={{ width: 300 }}>
+                  <Select
+                    value={type}
+                    onChange={handleChange}
+                  >
+                    {
+                      types.map((t) => (
+                        <MenuItem
+                          key={t.name}
+                          value={t.value}
+                        >
+                          <div style={{ display: "flex" }}>
+                            {<img src={t.img} alt="" style={{ width: 20, height: 20, marginRight: 10 }} />}
+                            {t.name}
+                          </div>
 
-                    </MenuItem>
-                  ))
-                }
-              </Select>
-            </FormControl>
-          </div>
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+            )
+          }
 
           <div className='list_article'>
             {
-              data.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
+              faves && dataFaves.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
+            }
+            {
+              !faves && data.map((d: IData, index: number) => <Card key={index} date={d.created_at} description={d.story_title} />)
             }
           </div>
 
