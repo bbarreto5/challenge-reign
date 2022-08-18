@@ -69,7 +69,7 @@ function App() {
   }, [type])
 
   useEffect(() => {
-    if (page != -1) {
+    if (page !== -1) {
       getData(type, page).then(data => setData(dataFilter(data)));
     }
   }, [page])
