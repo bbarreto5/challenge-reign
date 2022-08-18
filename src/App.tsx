@@ -42,10 +42,11 @@ const types = [
 
 function App() {
 
-  const [page, setPage] = useState<number>(-1);
+  const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPage] = useState<number>(0);
   const [type, setType] = useState<any>(1);
   const [data, setData] = useState<Array<IData>>([]);
+  const [faves, setFaves] = useState<Boolean>(false);
 
   const dataFilter = (data: any): Array<IData> => {
     var auxData: Array<IData> = [];
@@ -60,7 +61,7 @@ function App() {
   }
 
   useEffect(() => {
-    setPage(-1);
+    setPage(0);
     getData(type, 0).then(data => {
       setTotalPage(data.nbPages);
       setData(dataFilter(data))
